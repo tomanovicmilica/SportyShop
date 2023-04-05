@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,8 @@ namespace API.Data
         public DbSet<PaymentMethod>? PaymentMethods { get; set; }
         public DbSet<BasketItem>? BasketItems { get; set; }
         public DbSet<Order>? Orders { get; set; }
+        public DbSet<Size>? Sizes { get; set; }
+        public DbSet<ProductSize>? ProductSizes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

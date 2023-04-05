@@ -8,9 +8,10 @@ namespace API.Entities
 {
     public class ProductSize
     {
+        public int Id { get; set; }
         //[ForeignKey("Size")]
         public Size? Size { get; set; }
-        public int Id { get; set; }
+        public int SizeId { get; set; }
 
        // [ForeignKey("Product")]
         public Product? Product { get; set; }
