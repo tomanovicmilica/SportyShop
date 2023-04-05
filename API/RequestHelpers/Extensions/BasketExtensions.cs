@@ -14,7 +14,7 @@ namespace API.RequestHelpers.Extensions
 
             return new BasketDto {
                 BasketId = basket.BasketId,
-                BuyerId = basket.UserId.ToString(),
+                BuyerId = basket.UserId,
                 Items = basket.Items.Select(item => new BasketItemDto
                 {
                     ProductId = item.ProductId,
@@ -32,7 +32,7 @@ namespace API.RequestHelpers.Extensions
             return query
                 .Include(i => i.Items)
                 .ThenInclude(p => p.Product)
-                .Where(basket => basket.UserId.ToString() == buyerId);
+                .Where(basket => basket.UserId == buyerId);
         }
         }
     }

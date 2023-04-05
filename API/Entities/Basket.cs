@@ -16,9 +16,7 @@ namespace API.Entities
 
         public DateTime Date { get; set; } = DateTime.UtcNow;
 
-       // [ForeignKey("User")]
-        public User? User { get; set; }
-        public int UserId { get; set; }
+        public string? UserId { get; set; }
 
         public List<BasketItem> Items { get; set; } = new List<BasketItem>();
 

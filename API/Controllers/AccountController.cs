@@ -40,7 +40,7 @@ namespace API.Controllers
             if(anonBasket != null) {
 
                 if(userBasket != null) _context.Baskets!.Remove(userBasket);
-                anonBasket.UserId = int.Parse(user.UserName!);
+                anonBasket.UserId = user.UserName!;
                 Response.Cookies.Delete("buyerId");
                 await _context.SaveChangesAsync();
             }
@@ -109,7 +109,7 @@ namespace API.Controllers
             return await _context.Baskets!
                 .Include(i => i.Items)
                 .ThenInclude(p => p.Product)
-                .FirstOrDefaultAsync(basket => basket.UserId.ToString() == buyerId);
+                .FirstOrDefaultAsync(basket => basket.UserId == buyerId);
         }
     }
 }

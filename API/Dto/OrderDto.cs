@@ -14,8 +14,6 @@ namespace API.Dto
 
         public ShippingAddress? ShippingAddress { get; set; }
 
-        public List<OrderItemDto>? OrderItems { get; set; }
-
         public int MethodId { get; set; }
 
         public long Subtotal { get; set; }
@@ -27,6 +25,8 @@ namespace API.Dto
         public string? OrderStatus { get; set; }
 
         public long Total { get; set; }
+
+        public List<OrderItemDto>? OrderItems { get; set; }
 
         
     }
