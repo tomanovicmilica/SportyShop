@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Dto;
 using API.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.RequestHelpers.Extensions
 {
@@ -46,8 +48,28 @@ namespace API.RequestHelpers.Extensions
 
             query = query.Where(p => typeList.Count == 0 || typeList.Contains(p.ProductType!.Name!.ToLower()));
 
-
             return query;
         }
+     public static IQueryable<UpdateProductDto> ProjectProductSizeToProduct(this IQueryable<Product> query) {
+            return query 
+                .Select(p => new UpdateProductDto {
+                    ProductId = p.ProductId,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Description = p.Description,
+                    ImageUrl = p.ImageUrl,
+                    ProductTypeId = p.ProductTypeId,
+                    ProductType = p.ProductType,
+                    BrandId = p.BrandId,
+                    Brand = p.Brand,
+                    ProductSizes = p.ProductSizes.Select(pSize => new ProductSizeDto {
+                        ProductId = pSize.ProductId,
+                        SizeId = pSize.SizeId,
+                        QuantityInStock = pSize.QuantityInStock
+                    }).ToList()
+                }).AsNoTracking();
+     }
+
+
     }
 }

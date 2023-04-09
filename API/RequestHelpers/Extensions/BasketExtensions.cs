@@ -15,6 +15,7 @@ namespace API.RequestHelpers.Extensions
             return new BasketDto {
                 BasketId = basket.BasketId,
                 BuyerId = basket.UserId,
+                SubtotalPrice = basket.SubtotalPrice,
                 Items = basket.Items.Select(item => new BasketItemDto
                 {
                     ProductId = item.ProductId,

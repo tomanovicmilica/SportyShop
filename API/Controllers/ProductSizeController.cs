@@ -6,6 +6,7 @@ using API.Data;
 using API.Dto;
 using API.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +41,7 @@ namespace API.Controllers
             return productSize;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<ProductSize>> CreateProductSize([FromForm] ProductSizeDto productSizeDto)
         { 

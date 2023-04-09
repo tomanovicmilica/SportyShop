@@ -8,6 +8,7 @@ using API.Entities;
 using API.RequestHelpers;
 using API.RequestHelpers.Extensions;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,25 +26,31 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedList<Product>>> GetProducts([FromQuery] ProductParams productParams) {
+        public async Task<ActionResult<PagedList<UpdateProductDto>>> GetProducts([FromQuery] ProductParams productParams) {
+
             var query = _context.Products!
                 .Sort(productParams.OrderBy!)
                 .Search(productParams.SearchTerm!)
                 .Filter(productParams.Brands!, productParams.Types!)
+                .ProjectProductSizeToProduct()
                 .AsQueryable();
 
-                var products = await PagedList<Product>.ToPagedList(query, productParams.PageNumber, productParams.PageSize);
+                var products = await PagedList<UpdateProductDto>.ToPagedList(query, productParams.PageNumber, productParams.PageSize);
+                Response.AddPaginationHeader(products.MetaData);
                 return products!;
         }
 
         [HttpGet("{id}", Name = "GetProduct")]
-        public async Task<ActionResult<Product>> GetProduct(int id) {
+        public async Task<ActionResult<UpdateProductDto?>> GetProduct(int id) {
 
-            var product = await _context!.Products!.FindAsync(id);
+            //var product = await _context!.Products!.FindAsync(id);
 
-            if(product==null) return NotFound();
+            return await _context!.Products!
+                    .ProjectProductSizeToProduct().FirstOrDefaultAsync(x => x.ProductId == id);
 
-            return product;
+            /*f(product==null) return NotFound();
+
+            return product;*/
         }
 
         [HttpGet("filters")]
@@ -55,6 +62,7 @@ namespace API.Controllers
             return Ok(new { brands, types });
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct([FromForm] CreateProductDto productDto)
         { 
@@ -71,6 +79,7 @@ namespace API.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<ActionResult<Product>> UpdateProduct([FromForm]UpdateProductDto productDto)
         { 
@@ -87,6 +96,7 @@ namespace API.Controllers
             return BadRequest(new ProblemDetails { Title = "Problem updating product" });
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
@@ -103,6 +113,8 @@ namespace API.Controllers
             return BadRequest(new ProblemDetails { Title = "Problem deleting product" });
         }
 
+        
+       
 
     }
 }

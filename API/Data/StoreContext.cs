@@ -41,7 +41,11 @@ namespace API.Data
                     new Role {Id = 2, Name = "Admin", NormalizedName = "ADMIN" }
                 );
 
-        
+            builder.Entity<Order>()
+                .ToTable(tb => tb.HasTrigger("ProductStock"));
+
+            builder.Entity<BasketItem>()
+                .ToTable(tb => tb.HasTrigger("SubtotalBasket"));
         }
     }
 }

@@ -6,6 +6,7 @@ using API.Data;
 using API.Dto;
 using API.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -21,6 +22,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}", Name = "GetSize")]
         public async Task<ActionResult<Size>> GetSize(int id) {
 
@@ -30,7 +32,8 @@ namespace API.Controllers
 
             return size;
         }
-
+        
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<Size>> CreateSize([FromForm] SizeDto sizeDto)
         { 

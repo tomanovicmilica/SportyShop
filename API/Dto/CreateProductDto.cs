@@ -23,13 +23,13 @@ namespace API.Dto
         [Required]
         public string? ImageUrl { get; set; }
 
-        public ProductType? ProductType {get; set; }
+        public ProductType? ProductType { get; set; }
         public int ProductTypeId { get; set; }
 
-        public Brand? Brand {get; set; }
+        public Brand? Brand { get; set; }
         public int BrandId { get; set; }
 
-         public List<ProductSize>? ProductSizes { get; set; }
+         public List<ProductSizeDto>? ProductSizes { get; set; }
 
     }
 

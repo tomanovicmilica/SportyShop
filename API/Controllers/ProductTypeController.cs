@@ -6,6 +6,7 @@ using API.Data;
 using API.Dto;
 using API.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +41,7 @@ namespace API.Controllers
             return productType;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<ProductType>> CreateProductType([FromForm] CreateProductTypeDto productTypeDto)
         { 
@@ -56,6 +58,7 @@ namespace API.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProductType(int id)
         {

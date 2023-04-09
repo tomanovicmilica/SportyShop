@@ -12,5 +12,7 @@ namespace API.Dto
          public string? BuyerId { get; set; }
 
          public List<BasketItemDto>? Items { get; set; }
+
+         public int SubtotalPrice { get; set; }
     }
 }
