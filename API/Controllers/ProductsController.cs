@@ -43,14 +43,10 @@ namespace API.Controllers
         [HttpGet("{id}", Name = "GetProduct")]
         public async Task<ActionResult<UpdateProductDto?>> GetProduct(int id) {
 
-            //var product = await _context!.Products!.FindAsync(id);
-
             return await _context!.Products!
                     .ProjectProductSizeToProduct().FirstOrDefaultAsync(x => x.ProductId == id);
 
-            /*f(product==null) return NotFound();
-
-            return product;*/
+            
         }
 
         [HttpGet("filters")]

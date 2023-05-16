@@ -17,6 +17,8 @@ namespace API.Dto
 
         public string? ImageUrl { get; set; }
 
+        public int SizeId { get; set; }
+
         public int Quantity { get; set; }
     }
 }

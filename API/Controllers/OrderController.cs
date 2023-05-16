@@ -66,6 +66,7 @@ namespace API.Controllers
                 {
                     ItemOrdered = itemOrdered,
                     Price = productItem.Price,
+                    SizeId = item.SizeId,
                     Quantity = item.Quantity
                 };
                 items.Add(orderItem);

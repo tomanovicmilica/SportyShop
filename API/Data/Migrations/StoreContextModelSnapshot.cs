@@ -58,6 +58,9 @@ namespace API.Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProductSizeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -67,7 +70,12 @@ namespace API.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("BasketItems");
+                    b.HasIndex("ProductSizeId");
+
+                    b.ToTable("BasketItems", t =>
+                        {
+                            t.HasTrigger("SubtotalBasket");
+                        });
                 });
 
             modelBuilder.Entity("API.Entities.Brand", b =>
@@ -119,7 +127,10 @@ namespace API.Data.Migrations
 
                     b.HasIndex("PaymentMethodMethodId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", t =>
+                        {
+                            t.HasTrigger("ProductStock");
+                        });
                 });
 
             modelBuilder.Entity("API.Entities.OrderItem", b =>
@@ -137,6 +148,9 @@ namespace API.Data.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SizeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -524,9 +538,17 @@ namespace API.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("API.Entities.ProductSize", "ProductSize")
+                        .WithMany()
+                        .HasForeignKey("ProductSizeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Basket");
 
                     b.Navigation("Product");
+
+                    b.Navigation("ProductSize");
                 });
 
             modelBuilder.Entity("API.Entities.Order", b =>
