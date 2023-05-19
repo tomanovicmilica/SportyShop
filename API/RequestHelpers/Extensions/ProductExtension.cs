@@ -63,13 +63,43 @@ namespace API.RequestHelpers.Extensions
                     BrandId = p.BrandId,
                     Brand = p.Brand,
                     ProductSizes = p.ProductSizes.Select(pSize => new ProductSizeDto {
+                        Product = pSize.Product,
                         ProductId = pSize.ProductId,
+                        Size = pSize.Size,
                         SizeId = pSize.SizeId,
                         QuantityInStock = pSize.QuantityInStock
                     }).ToList()
                 }).AsNoTracking();
      }
 
+     public static IQueryable<UpdateProductSizeDto> ProjectSizeToProductSize(this IQueryable<ProductSize> query) {
 
+
+        return query
+            .Select(s => new UpdateProductSizeDto {
+                Id = s.Id,
+                SizeId = s.SizeId,
+                Size = s.Size,
+                ProductId = s.ProductId,
+                Product = s.Product,
+                QuantityInStock = s.QuantityInStock
+            }).AsNoTracking();
+     }
+
+    public static IQueryable<UpdateSizeDto> ProjectSizeToSize(this IQueryable<Size> query) {
+
+
+        return query
+            .Select(s => new UpdateSizeDto {
+                Id = s.Id,
+                SizeOfProduct = s.SizeOfProduct,
+                ProductSizes = s.ProductSizes.Select(pSize => new ProductSizeDto {
+                        ProductId = pSize.ProductId,
+                        SizeId = pSize.SizeId,
+                        QuantityInStock = pSize.QuantityInStock
+                    }).ToList()
+            }).AsNoTracking();
+     }
+    
     }
 }

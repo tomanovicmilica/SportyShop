@@ -14,6 +14,12 @@ namespace API.Dto
         [Required]
         public string? SizeOfProduct { get; set; }
 
-       public List<ProductSize>? ProductSizes { get; set; }
+       public List<ProductSizeDto>? ProductSizes { get; set; }
+
+    
+    }
+
+    public class UpdateSizeDto: SizeDto {
+        public int Id { get; set; }
     }
 }

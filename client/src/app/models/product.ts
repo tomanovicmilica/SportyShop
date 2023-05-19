@@ -1,3 +1,5 @@
+
+
 export interface Product {
     productId: number
     name: string
@@ -8,14 +10,16 @@ export interface Product {
     productTypeId: number
     brand: Brand
     brandId: number
-    productSizes: ProductSize[]
+    productSizes?: ProductSize[]
+
   }
   
   export interface ProductType {
     productTypeId: number
     name: string
   }
-  
+
+
   export interface Brand {
     brandId: number
     name: string
@@ -35,3 +39,19 @@ export interface Product {
     sizeOfProduct: string
     productSizes: string[]
   }
+
+  export interface ProductParams {
+    orderBy: string;
+    searchTerm?: string;
+    types: string[];
+    brands: string[];
+    pageNumber: number;
+    pageSize: number;
+    productSizes: string[];
+}
+
+export interface Size {
+  id: number
+  sizeOfProduct: string
+  productSizes: string[]
+}

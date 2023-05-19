@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Entities;
 
 namespace API.Dto
 {
@@ -17,7 +18,7 @@ namespace API.Dto
 
         public string? ImageUrl { get; set; }
 
-        public int SizeId { get; set; }
+        public string? Size { get; set; }
 
         public int Quantity { get; set; }
     }

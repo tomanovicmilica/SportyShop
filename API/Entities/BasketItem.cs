@@ -20,8 +20,7 @@ namespace API.Entities
         public Product? Product { get; set; }
         public int ProductId { get; set; }
 
-        public ProductSize? ProductSize { get; set; }
-        public int SizeId { get; set; }
+        public string? Size { get; set; }
         
         public int Quantity { get; set; }
     }

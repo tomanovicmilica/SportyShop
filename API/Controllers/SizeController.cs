@@ -8,6 +8,8 @@ using API.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using API.RequestHelpers.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -24,9 +26,9 @@ namespace API.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet("{id}", Name = "GetSize")]
-        public async Task<ActionResult<Size>> GetSize(int id) {
+        public async Task<ActionResult<UpdateSizeDto>> GetSize(int id) {
 
-            var size = await _context!.Sizes!.FindAsync(id);
+            var size = await _context!.Sizes!.ProjectSizeToSize().FirstOrDefaultAsync(x => x.Id == id);
 
             if(size==null) return NotFound();
 

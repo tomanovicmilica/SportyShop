@@ -20,21 +20,22 @@ namespace API.Entities
 
         public List<BasketItem> Items { get; set; } = new List<BasketItem>();
 
-        public void AddItem(Product product, ProductSize size, int quantity)
+        public void AddItem(Product product, int quantity)
         {
-            if (Items.All(item => item.ProductId != product.ProductId && item.SizeId != size.SizeId))
+            if (Items.All(item => item.ProductId != product.ProductId))
             {
-                Items.Add(new BasketItem { Product = product, ProductSize = size,Quantity = quantity });
+                Items.Add(new BasketItem { Product = product, Quantity = quantity });
                 return;
             }
 
-            var existingItem = Items.FirstOrDefault(item => item.ProductId == product.ProductId && item.SizeId == size.SizeId);
+            var existingItem = Items.FirstOrDefault(item => item.ProductId == product.ProductId);
             if (existingItem != null) existingItem.Quantity += quantity;
+            //dodati i size u proveru
         }
 
         public void RemoveItem(int productId, int sizeId, int quantity = 1)
         {
-            var item = Items.FirstOrDefault(basketItem => basketItem.ProductId == productId && basketItem.SizeId == sizeId);
+            var item = Items.FirstOrDefault(basketItem => basketItem.ProductId == productId);
             if (item == null) return;
             item.Quantity -= quantity;
             if (item.Quantity == 0) Items.Remove(item);

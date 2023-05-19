@@ -58,19 +58,17 @@ namespace API.Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductSizeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<string>("Size")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BasketItemId");
 
                     b.HasIndex("BasketId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("ProductSizeId");
 
                     b.ToTable("BasketItems", t =>
                         {
@@ -150,8 +148,8 @@ namespace API.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("SizeId")
-                        .HasColumnType("int");
+                    b.Property<string>("Size")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -538,17 +536,9 @@ namespace API.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Entities.ProductSize", "ProductSize")
-                        .WithMany()
-                        .HasForeignKey("ProductSizeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Basket");
 
                     b.Navigation("Product");
-
-                    b.Navigation("ProductSize");
                 });
 
             modelBuilder.Entity("API.Entities.Order", b =>

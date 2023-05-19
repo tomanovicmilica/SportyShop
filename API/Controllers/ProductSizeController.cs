@@ -9,6 +9,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using API.RequestHelpers.Extensions;
 
 namespace API.Controllers
 {
@@ -24,17 +25,19 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductSize>>> GetProductSizes() {
-            var productSizes = await _context.ProductSizes!
-                .ToListAsync();
+        public async Task<ActionResult<List<UpdateProductSizeDto>>> GetProductSizes() {
+            var  sizes = await _context.ProductSizes!.Select(p => p.Size).ToListAsync();
 
+            var productSizes = await _context.ProductSizes!
+                .ProjectSizeToProductSize()
+                .ToListAsync();
             return productSizes;
         }
 
         [HttpGet("{id}", Name = "GetProductSize")]
-        public async Task<ActionResult<ProductSize>> GetProductSize(int id) {
+        public async Task<ActionResult<UpdateProductSizeDto>> GetProductSize(int id) {
 
-            var productSize = await _context!.ProductSizes!.FindAsync(id);
+            var productSize = await _context!.ProductSizes!.ProjectSizeToProductSize().FirstOrDefaultAsync(x => x.Id == id);
 
             if(productSize==null) return NotFound();
 
