@@ -78,7 +78,8 @@ const Basket = {
 const Account = {
     login: (values: any) => requests.post('account/login', values),
     register: (values: any) => requests.post('account/register', values),
-    currentUser: () => requests.get('account/currentUser')
+    currentUser: () => requests.get('account/currentUser'),
+    fetchAddress: () => requests.get('account/savedAddress')
 }
 
 const ProductSize = {
@@ -86,11 +87,19 @@ const ProductSize = {
     getSize: (productSizeId: number) => requests.get(`productSize/${productSizeId}`)
 }
 
+const Orders = {
+    list: () => requests.get('order'),
+    fetch: (id: number) => requests.get(`order/${id}`),
+    create: (values: any) => requests.post('order', values)
+}
+
+
 const agent = {
     Catalog,
     Basket,
     Account,
-    ProductSize
+    ProductSize,
+    Orders
 }
 
 export default agent;
