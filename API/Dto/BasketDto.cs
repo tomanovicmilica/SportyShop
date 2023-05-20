@@ -14,5 +14,8 @@ namespace API.Dto
          public List<BasketItemDto>? Items { get; set; }
 
          public int SubtotalPrice { get; set; }
+
+         public string? PaymentIntentId { get; set; }
+        public string? ClientSecret { get; set; }
     }
 }

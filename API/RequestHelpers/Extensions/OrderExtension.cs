@@ -18,7 +18,6 @@ namespace API.RequestHelpers.Extensions
                     OrderId = order.OrderId,
                     BuyerId = order.BuyerId,
                     ShippingAddress = order.ShippingAddress,
-                    MethodId = order.MethodId,
                     Subtotal = order.Subtotal,
                     AdditionalExpenses = order.AdditionalExpenses,
                     OrderDate = order.OrderDate,

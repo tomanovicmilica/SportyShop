@@ -15,6 +15,8 @@ namespace API.RequestHelpers.Extensions
             return new BasketDto {
                 BasketId = basket.BasketId,
                 BuyerId = basket.UserId,
+                PaymentIntentId = basket.PaymentIntentId,
+                ClientSecret = basket.ClientSecret,
                 SubtotalPrice = basket.SubtotalPrice,
                 Items = basket.Items.Select(item => new BasketItemDto
                 {
@@ -23,7 +25,7 @@ namespace API.RequestHelpers.Extensions
                     Price = item.Product.Price,
                     Description = item.Product.Description,
                     ImageUrl = item.Product.ImageUrl,
-                    Quantity = item.Quantity
+                    Quantity = item.Quantity,
                 }).ToList()
             };
             }

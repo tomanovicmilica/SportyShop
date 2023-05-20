@@ -19,10 +19,6 @@ namespace API.Entities
 
          public List<OrderItem>? OrderItems { get; set; }
 
-        //[ForeignKey(nameof(PaymentMethod))]
-        public PaymentMethod? PaymentMethod { get; set; }
-        public int MethodId { get; set; }
-
         public long Subtotal { get; set; }
 
         public long AdditionalExpenses { get; set; }
@@ -30,6 +26,9 @@ namespace API.Entities
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
 
         public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
+
+        public string? PaymentIntentId { get; set; }
+
 
 
          public long GetTotal()

@@ -5,7 +5,6 @@ import { currencyFormat } from "../../app/util/util";
 import { LoadingButton } from "@mui/lab";
 import { useAppSelector, useAppDispatch } from "../../app/store/configureStore";
 import { addBasketItemAsync } from "../basket/basketSlice";
-import { ProductSize } from "../../app/models/productSize";
 
 interface Props {
     product: Product;
@@ -40,7 +39,7 @@ export default function ProductCard({product}: Props) {
         </CardContent>
         <CardActions>
             <LoadingButton 
-                    loading={status.includes('pendingAddItem' + product.productId)} 
+                    loading={status ==='pendingAddItem' + product.productId} 
                     onClick={() => dispatch(addBasketItemAsync({productId: product.productId}))}  
                     size="small">Add to Cart</LoadingButton>
             <Button component={Link} to={`/catalog/${product.productId}`}  size="small">View</Button>
