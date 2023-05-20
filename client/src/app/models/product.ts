@@ -44,7 +44,7 @@ export interface Product {
     orderBy: string;
     searchTerm?: string;
     types: string[];
-    brands: string[];
+    brands: Brand[];
     pageNumber: number;
     pageSize: number;
     productSizes: string[];

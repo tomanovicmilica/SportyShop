@@ -7,6 +7,7 @@ using API.Dto;
 using API.Entities;
 using API.RequestHelpers;
 using API.RequestHelpers.Extensions;
+using API.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,10 +20,13 @@ namespace API.Controllers
         private readonly StoreContext _context;
         private readonly IMapper _mapper;
 
-        public ProductsController(StoreContext context, IMapper mapper) {
+        private readonly ImageService _imageService;
+
+        public ProductsController(StoreContext context, IMapper mapper, ImageService imageService) {
 
             _context = context;
             _mapper = mapper;
+            _imageService = imageService;
         }
 
         [HttpGet]
@@ -65,6 +69,17 @@ namespace API.Controllers
 
             var product = _mapper.Map<Product>(productDto);
 
+             if (productDto.File != null)
+            {
+                var imageResult = await _imageService.AddImageAsync(productDto.File);
+
+                if (imageResult.Error != null)
+                    return BadRequest(new ProblemDetails { Title = imageResult.Error.Message });
+
+                product.ImageUrl = imageResult.SecureUrl.ToString();
+                product.PublicId = imageResult.PublicId;
+            }
+
             _context.Products!.Add(product);
 
             var result = await _context.SaveChangesAsync() > 0;
@@ -85,6 +100,20 @@ namespace API.Controllers
 
             _mapper.Map(productDto, product);
 
+             if (productDto.File != null)
+            {
+                var imageUploadResult = await _imageService.AddImageAsync(productDto.File);
+
+                if (imageUploadResult.Error != null) 
+                    return BadRequest(new ProblemDetails { Title = imageUploadResult.Error.Message });
+
+                if (!string.IsNullOrEmpty(product.PublicId)) 
+                    await _imageService.DeleteImageAsync(product.PublicId);
+
+                product.ImageUrl = imageUploadResult.SecureUrl.ToString();
+                product.PublicId = imageUploadResult.PublicId;
+            }
+
             var result = await _context.SaveChangesAsync() > 0;
 
             if (result) return Ok(product);
@@ -99,6 +128,10 @@ namespace API.Controllers
             var product = await _context.Products!.FindAsync(id);
 
             if (product == null) return NotFound();
+
+             if (!string.IsNullOrEmpty(product.PublicId)) 
+                await _imageService.DeleteImageAsync(product.PublicId);
+
 
             _context.Products.Remove(product);
 

@@ -27,11 +27,13 @@ export default function ProductCard({product}: Props) {
                 sx: { fontWeight: 'bold', color: 'primary.main' }
             }}
         />
+        
         <CardMedia
             sx={{ height: 140, backgroundSize: 'contain', bgcolor: 'primary.light' }}
             image={product.imageUrl}
             title={product.name}
-        />
+            component='img'
+        /> 
         <CardContent>
             <Typography gutterBottom color='secondary' variant="h5">
                 {currencyFormat(product.price)}

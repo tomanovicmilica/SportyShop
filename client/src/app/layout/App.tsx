@@ -1,18 +1,21 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import Header from './Header';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingComponent from './LoadingComponent';
 import { useAppDispatch } from '../store/configureStore';
 import { fetchCurrentUser } from '../../features/account/accountSlice';
 import { fetchBasketAsync } from "../../features/basket/basketSlice";
+import HomePage from '../../features/home/HomePage';
+import '@fontsource/roboto/500.css';
 
 
 function App() {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
   
 
   const initApp = useCallback(async () => {
@@ -34,7 +37,13 @@ function App() {
     palette: {
       mode: palleteType,
       background: {
-        default: (palleteType === 'light' ? '#eaeaea' : '#121212')
+        default: (palleteType === 'light' ? '#bcaaa4' : '#121212')
+      },
+      primary: {
+        main: '#8d6e63',
+      },
+      secondary: {
+        main: '#4e342e',
       }
     }
   })
@@ -43,16 +52,19 @@ function App() {
     setDarkMode(!darkMode);
   }
 
-  if (loading) return <LoadingComponent message="Initialising app..." />
 
   return (
     <ThemeProvider theme={theme}>
         <ToastContainer position="bottom-right" hideProgressBar theme="colored" />
         <CssBaseline />
         <Header darkMode={darkMode} handleThemeChange={handleThemeChange} />
-        <Container>
-            <Outlet />
-        </Container>
+      {loading ? <LoadingComponent message="Initialising app..." />
+          : location.pathname === '/' ? <HomePage />
+          : <Container sx={{mt: 4}}>
+              <Outlet />
+            </Container>
+      }
+
     </ThemeProvider>
   )
 }

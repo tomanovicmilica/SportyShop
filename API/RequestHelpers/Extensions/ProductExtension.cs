@@ -57,11 +57,11 @@ namespace API.RequestHelpers.Extensions
                     Name = p.Name,
                     Price = p.Price,
                     Description = p.Description,
-                    ImageUrl = p.ImageUrl,
                     ProductTypeId = p.ProductTypeId,
                     ProductType = p.ProductType,
                     BrandId = p.BrandId,
                     Brand = p.Brand,
+                    ImageUrl = p.ImageUrl,
                     ProductSizes = p.ProductSizes.Select(pSize => new ProductSizeDto {
                         Product = pSize.Product,
                         ProductId = pSize.ProductId,

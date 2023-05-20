@@ -21,6 +21,8 @@ namespace API.Dto
         public string? Description { get; set; }
 
         [Required]
+         public IFormFile? File { get; set; }
+
         public string? ImageUrl { get; set; }
 
         public ProductType? ProductType { get; set; }

@@ -28,6 +28,8 @@ namespace API.Entities
         public Brand? Brand { get; set; }
         public int BrandId { get; set; }
 
+        public string? PublicId { get; set; }
+
         public List<ProductSize> ProductSizes { get; set; } = new List<ProductSize>();
 
          public void AddItem(Size size, int quantity)

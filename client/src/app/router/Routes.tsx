@@ -2,7 +2,6 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 import App from "../layout/App";
 import Catalog from "../../features/catalog/Catalog";
 import ProductDetails from "../../features/catalog/ProductDetails";
-import HomePage from "../../features/home/HomePage";
 import ServerError from "../errors/ServerError";
 import NotFound from "../errors/NotFound";
 import BasketPage from "../../features/basket/BasketPage";
@@ -11,6 +10,8 @@ import RequireAuth from "./RequireAuth";
 import Register from "../../features/account/Register";
 import Orders from "../../features/order/Orders";
 import CheckoutWrapper from "../../features/checkout/CheckoutWrapper";
+import Inventory from "../../features/admin/Inventory";
+import AboutPage from "../../features/about/AboutPage";
 
 export const router = createBrowserRouter([
     {
@@ -21,10 +22,12 @@ export const router = createBrowserRouter([
                 {path: 'checkout', element: <CheckoutWrapper />},
                 {path: 'orders', element: <Orders />},
             ]},
-            {path: '', element: <HomePage />},
+            {element: <RequireAuth roles={['Admin']} />, children: [
+                {path: 'inventory', element: <Inventory />},
+            ]},
             {path: 'catalog', element: <Catalog />},
             {path: 'catalog/:productId', element: <ProductDetails />},
-           // {path: 'about', element: <AboutPage />},
+            {path: 'about', element: <AboutPage />},
             //{path: 'contact', element: <ContactPage />},
             {path: 'server-error', element: <ServerError />},
             {path: 'not-found', element: <NotFound />},

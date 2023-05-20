@@ -1,5 +1,5 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import { Product, ProductParams } from "../../app/models/product";
+import { Brand, Product, ProductParams } from "../../app/models/product";
 import agent from "../../app/api/agent";
 import { RootState } from "../../app/store/configureStore";
 import { MetaData } from "../../app/models/pagination";
@@ -9,7 +9,7 @@ interface CatalogState {
     productsLoaded: boolean;
     filtersLoaded: boolean;
     status: string;
-    brands:string[];
+    brands: Brand[];
     types: string[];
     productSizes: string[];
     productParams: ProductParams;
@@ -19,6 +19,7 @@ interface CatalogState {
 const productsAdapter = createEntityAdapter<Product>({
     selectId: (product) => product.productId
 });
+
 
 
 export const fetchBrands = createAsyncThunk( 
@@ -132,12 +133,6 @@ export const catalogSlice = createSlice({
         removeProduct: (state, action) => {
             productsAdapter.removeOne(state, action.payload);
             state.productsLoaded = false;
-        },
-        setBrands: (state, action) => {
-            state.brands = action.payload
-        },
-        setTypes: (state, action) => {
-            state.types = action.payload
         }
     },
     extraReducers: (builder => {
@@ -177,9 +172,11 @@ export const catalogSlice = createSlice({
         builder.addCase(fetchFilters.rejected, (state) => {
             state.status = 'idle';
         });
+
     })
 })
 
 export const productSelectors = productsAdapter.getSelectors((state: RootState) => state.catalog);
 
-export const {setProductParams, resetProductParams, setMetaData, setPageNumber, setProduct, removeProduct, setBrands, setTypes} = catalogSlice.actions;
+
+export const {setProductParams, resetProductParams, setMetaData, setPageNumber, setProduct, removeProduct} = catalogSlice.actions;

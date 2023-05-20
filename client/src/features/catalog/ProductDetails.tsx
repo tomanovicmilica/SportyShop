@@ -1,6 +1,6 @@
 import { JSXElementConstructor, Key, ReactElement, ReactFragment, ReactPortal, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Grid, Typography, Divider, TableContainer, Table, TableBody, TableRow, TableCell, TextField, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, SelectChangeEvent, InputLabel, MenuItem, Select} from "@mui/material";
+import { Grid, Typography, Divider, TableContainer, Table, TableBody, TableRow, TableCell, TextField, MenuItem, Select} from "@mui/material";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import NotFound from "../../app/errors/NotFound";
 import { LoadingButton } from "@mui/lab";
@@ -18,7 +18,6 @@ export default function ProductDetails() {
     const [quantity, setQuantity] = useState(0);
     //const sizes = product?.productSizes?.find(s=>s.sizeId === size?.sizeId);
     
-    const productSizes = [{value: product?.productSizes}];
     const productSize = product?.productSizes ? product.productSizes : "";
     const [size, setSize] = useState(productSize);
     const item = basket?.items.find(i => i.productId === product?.productId);
@@ -86,27 +85,28 @@ export default function ProductDetails() {
             <Grid item xs={8} >
             {product.productSizes ? (
                       <div>
-                        <label
+                        <label 
                           htmlFor="size"
-                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                          className="block mb-2 me-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Pick a size
+                          Pick a size 
                         </label>
-                        <select
+                        <Select sx={{ display: 'inline-flex'}}
                           id="size"
                           name="size"
+                          label="Size"
                           value={size.toString()}
                           onChange={(e) => setSize(e.target.value)}
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
                           {product.productSizes.map((item: { size: { sizeOfProduct: string | number | readonly string[] | undefined; }; sizeId: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | null | undefined; }, index: Key | null | undefined) => {
                             return (
-                              <option key={index} value={item.size.sizeOfProduct}>
+                              <MenuItem key={index} value={item.size.sizeOfProduct}>
                                 {item.size.sizeOfProduct}
-                              </option>
+                              </MenuItem>
                             );
                           })}
-                        </select>
+                        </Select>
                       </div>
                     ) : (
                       <div>
@@ -116,7 +116,7 @@ export default function ProductDetails() {
                         >
                           Pick a size
                         </label>
-                        <select
+                        <Select
                           id="size"
                           disabled={true}
                           name="size"
@@ -126,12 +126,12 @@ export default function ProductDetails() {
                         >
                           {/*{product.productSizes?.map((item, index) => {
                             return (
-                              <option key={index} value={item.size.sizeOfProduct}>
+                              <MenuItem key={index} value={item.size.sizeOfProduct}>
                                 {item.size.sizeOfProduct}
-                              </option>
+                              </MenuItem>
                             );
                           })}*/}
-                        </select>
+                        </Select>
                       </div>
                     )}
             </Grid>
