@@ -107,7 +107,8 @@ const ProductSize = {
 const Orders = {
     list: () => requests.get('order'),
     fetch: (id: number) => requests.get(`order/${id}`),
-    create: (values: any) => requests.post('order', values)
+    create: (values: any) => requests.post('order', values),
+    listAll: () => requests.get('order/orders')
 }
 
 const Payments = {
@@ -117,7 +118,28 @@ const Payments = {
 const Admin = {
     createProduct: (product: any) => requests.postForm('products', createFormData(product)),
     updateProduct: (product: any) => requests.putForm('products', createFormData(product)),
-    deleteProduct: (id: number) => requests.delete(`products/${id}`)
+    deleteProduct: (id: number) => requests.delete(`products/${id}`),
+    createBrand: (brand: any) => requests.postForm('brand', createFormData(brand)),
+    createProductType: (productType: any) => requests.postForm('productType', createFormData(productType)),
+    deleteBrand: (id: number) => requests.delete(`brand/${id}`),
+    deleteProductType: (id: number) => requests.delete(`productType/${id}`),
+    createSize:(size: any) => requests.postForm('size', createFormData(size))
+}
+
+const Brand = {
+    list: () => requests.get('brand'),
+    fetch: (id: number) => requests.get(`brand/${id}`),
+    create: (values: any) => requests.post('brand', values)
+}
+
+const ProductType = {
+    list: () => requests.get('productType'),
+    fetch: (id: number) => requests.get(`productType/${id}`),
+    create: (values: any) => requests.post('productType', values)
+}
+
+const Size ={
+    list: () => requests.get('size')
 }
 
 const agent = {
@@ -127,7 +149,10 @@ const agent = {
     ProductSize,
     Orders, 
     Payments,
-    Admin
+    Admin,
+    Brand,
+    ProductType,
+    Size
 }
 
 export default agent;

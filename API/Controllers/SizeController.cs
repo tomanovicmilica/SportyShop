@@ -25,6 +25,15 @@ namespace API.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<ActionResult<List<Size>>> GetSizes() {
+            var sizes = await _context.Sizes!
+                .ToListAsync();
+
+            return sizes;
+        }
+
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}", Name = "GetSize")]
         public async Task<ActionResult<UpdateSizeDto>> GetSize(int id) {
 

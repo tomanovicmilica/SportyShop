@@ -1,8 +1,10 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import { Brand, Product, ProductParams } from "../../app/models/product";
+import { Product, ProductParams } from "../../app/models/product";
 import agent from "../../app/api/agent";
 import { RootState } from "../../app/store/configureStore";
 import { MetaData } from "../../app/models/pagination";
+import { Brand } from "../../app/models/brand";
+import { ProductType } from "../../app/models/productType";
 
 
 interface CatalogState {
@@ -10,7 +12,7 @@ interface CatalogState {
     filtersLoaded: boolean;
     status: string;
     brands: Brand[];
-    types: string[];
+    types: ProductType[];
     productSizes: string[];
     productParams: ProductParams;
     metaData: MetaData | null;
@@ -22,16 +24,6 @@ const productsAdapter = createEntityAdapter<Product>({
 
 
 
-export const fetchBrands = createAsyncThunk( 
-    'catalog/fetchBrands',
-    async (_, thunkAPI) => {
-        try {
-            return agent.Catalog.fetchBrands();
-        } catch (error: any) {
-            return thunkAPI.rejectWithValue({error: error.data})
-        }
-    }
-)
 
 function getAxiosParams(productParams: ProductParams) {
     const params = new URLSearchParams();

@@ -1,8 +1,7 @@
-import { useEffect } from "react";
 import ProductList from "./ProductList";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import { useAppSelector, useAppDispatch } from "../../app/store/configureStore";
-import { fetchFilters, fetchProductsAsync, productSelectors,  setPageNumber, setProductParams } from "./catalogSlice";
+import { setPageNumber, setProductParams } from "./catalogSlice";
 import { Grid, Paper } from "@mui/material";
 import AppPagination from "../../app/components/AppPagination";
 import CheckboxButtons from "../../app/components/CheckboxButtons";
@@ -11,23 +10,26 @@ import ProductSearch from "./ProductSearch";
 import useProducts from "../../app/hooks/useProducts";
 
 
+
 const sortOptions = [
     { value: 'name', label: 'Alphabetical' },
     { value: 'priceDesc', label: 'Price - High to low' },
     { value: 'price', label: 'Price - Low to high' }
 ]
-interface Brand {
-    brandId: number,
-    name: string
-}
+
+
 
 export default function Catalog() {
     const {products, brands, types, filtersLoaded, metaData} = useProducts();
     const {productParams} = useAppSelector(state => state.catalog);
     const dispatch = useAppDispatch();
+  
 
 
     if (!filtersLoaded) return <LoadingComponent message='Loading products...' />
+
+
+    
 
     return (
         <Grid container columnSpacing={4}>
@@ -44,23 +46,29 @@ export default function Catalog() {
                 </Paper>
                
                 <Paper sx={{ p: 2, mb: 2 }}>
-                 
+                {brands.map(brand => (
                     <CheckboxButtons
-                    items={brands}
-                    checked={productParams.brands}
-                    onChange={(checkedItems: Brand[]) => dispatch(setProductParams({ brands: checkedItems as Brand[] }))}
+                    key = {brand.brandId}
+                    item={brand}
+                    checked={(productParams.brands) as unknown as string[]}
+                    onChange={(checkedItems: string[]) => dispatch(setProductParams({ brands: checkedItems as string[] }))}
                     
                 />
-
-    </Paper>
-                 {/*
-                <Paper sx={{ p: 2 }}>
-                    <CheckboxButtons
-                        items={types}
-                        checked={productParams.types}
-                        onChange={(checkedItems: string[]) => dispatch(setProductParams({ types: checkedItems }))}
-                    />
-    </Paper>*/}
+                ))}
+        </Paper>
+                 
+                        <Paper sx={{ p: 2 }}>
+                        {types.map(type => (
+                        <CheckboxButtons
+                            key = {type.productTypeId}
+                            item={type} 
+                            checked={(productParams.types) as unknown as string[]}
+                            onChange={(checkedItems: string[]) => dispatch(setProductParams({ types: checkedItems as string[] }))}
+                 />
+                 ))}
+                    </Paper>
+                 
+                
             </Grid>
             <Grid item xs={9}>
                 <ProductList products={products} />

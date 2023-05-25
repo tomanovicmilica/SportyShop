@@ -43,7 +43,7 @@ export interface Product {
   export interface ProductParams {
     orderBy: string;
     searchTerm?: string;
-    types: string[];
+    types: ProductType[];
     brands: Brand[];
     pageNumber: number;
     pageSize: number;

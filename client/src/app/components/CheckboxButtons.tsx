@@ -2,24 +2,25 @@ import { FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import { useState } from "react";
 
 interface MyType {
-    brandId: number,
-    name: string
+    productTypeId?: number;
+    brandId?: number;
+    name: string;
 }
 
 interface Props {
-    items: MyType[];
-    checked?: MyType[];
-    onChange: (items: MyType[]) => void;
+    item: MyType;
+    checked?: string[];
+    onChange: (items: string[]) => void;
 }
 
 
 
-export default function CheckboxButtons({ items, checked, onChange }: Props) {
+export default function CheckboxButtons({ item, checked, onChange }: Props) {
     const [checkedItems, setCheckedItems] = useState(checked || []);
 
-    function handleChecked(value: MyType) {
-        const currentIndex = checkedItems.findIndex(item => item.brandId === value.brandId );
-        let newChecked: MyType[] = [];
+    function handleChecked(value: string) {
+        const currentIndex = checkedItems.findIndex(item => item === value );
+        let newChecked: string[] = [];
         if (currentIndex === -1) newChecked = [...checkedItems,  value];
         else newChecked = checkedItems.filter(i => i !== value);
         setCheckedItems(newChecked);
@@ -28,15 +29,15 @@ export default function CheckboxButtons({ items, checked, onChange }: Props) {
 
     return (
         <FormGroup>
-            {items.map(item => (
+            
                 <FormControlLabel
-                    key={item.brandId}
+                    key={item.productTypeId || item.brandId}
                     control={<Checkbox
-                        checked={checkedItems.indexOf(item) !== -1}
-                        onClick={() => handleChecked(item)}
+                        checked={checkedItems.indexOf(item.name) !== -1}
+                        onClick={() => handleChecked(item.name)}
                     />}
                     label={item.name} />
-            ))}
+                    
         </FormGroup>
     )
 }

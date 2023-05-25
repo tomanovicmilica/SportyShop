@@ -1,6 +1,6 @@
-import { Box, Paper, Typography, Grid, Button } from "@mui/material";
-import { useEffect } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { Box, Paper, Typography, Grid, Button, Select, MenuItem, FormControl, FormHelperText } from "@mui/material";
+import { useEffect, useState } from "react";
+import { FieldValues, UseControllerProps, useController, useForm } from "react-hook-form";
 import AppDropzone from "../../app/components/AppDropzone";
 import AppSelectList from "../../app/components/AppSelectList";
 import AppTextInput from "../../app/components/AppTextInput";
@@ -12,11 +12,15 @@ import agent from "../../app/api/agent";
 import { useAppDispatch } from "../../app/store/configureStore";
 import { setProduct } from "../catalog/catalogSlice";
 import { LoadingButton } from "@mui/lab";
+import { Brand } from "../../app/models/brand";
+import { ProductType } from "../../app/models/productType";
 
-interface Props {
+
+interface Props{
     product?: Product;
     cancelEdit: () => void;
 }
+
 
 export default function ProductForm({ product, cancelEdit }: Props) {
     const { control, reset, handleSubmit, watch, formState: { isDirty, isSubmitting } } = useForm({
@@ -25,6 +29,23 @@ export default function ProductForm({ product, cancelEdit }: Props) {
     const { brands, types } = useProducts();
     const watchFile = watch('file', null);
     const dispatch = useAppDispatch();
+    const [brand, setBrand] = useState<Brand[]>([{brandId: 0,name: ''}]);
+    const [productType, setProductType] = useState<ProductType[]>([{productTypeId: 0,name: ''}]);
+    const [selectedBrandNumber, setSelectedBrandNumber] = useState(0);
+
+   
+    useEffect(() => {
+        agent.Brand.list()
+            .then(brand => setBrand(brand))
+            .catch(error => console.log(error))
+    }, []);
+
+    useEffect(() => {
+        agent.ProductType.list()
+            .then(productType => setProductType(productType))
+            .catch(error => console.log(error))
+    }, []);
+
 
     useEffect(() => {
         if (product && !watchFile && !isDirty) reset(product);
@@ -32,6 +53,7 @@ export default function ProductForm({ product, cancelEdit }: Props) {
             if (watchFile) URL.revokeObjectURL(watchFile.preview);
         }
     }, [product, reset, watchFile, isDirty])
+
 
     async function handleSubmitData(data: FieldValues) {
         try {
@@ -58,18 +80,24 @@ export default function ProductForm({ product, cancelEdit }: Props) {
                     <Grid item xs={12} sm={12}>
                         <AppTextInput control={control} name='name' label='Product name' />
                     </Grid>
+
+                                          
                     <Grid item xs={12} sm={6}>
-                        <AppSelectList control={control} items={brands} name='brand' label='Brand' />
+                     
+                         <AppSelectList control={control}  items={brand}  name='brandId' label='Brand' />
+    
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <AppSelectList control={control} items={types} name='type' label='Type' />
-                    </Grid>
+                    
+                            <AppSelectList control={control} items={productType} name='productTypeId' label='ProductType' />
+                   
+                               
+                       
+                </Grid>
                     <Grid item xs={12} sm={6}>
                         <AppTextInput type='number' control={control} name='price' label='Price' />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <AppTextInput type='number' control={control} name='quantityInStock' label='Quantity in Stock' />
-                    </Grid>
+                    
                     <Grid item xs={12}>
                         <AppTextInput control={control} multiline={true} rows={4} name='description' label='Description' />
                     </Grid>

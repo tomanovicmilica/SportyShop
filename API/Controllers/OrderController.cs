@@ -32,6 +32,16 @@ namespace API.Controllers
             return orders;
         }
 
+        [HttpGet("orders")]
+        public async Task<ActionResult<List<OrderDto>>> GetAllOrders() 
+        {
+            var orders = await _context.Orders!
+                .ProjectOrderToOrderDto()
+                .ToListAsync();
+
+            return orders;
+        }
+
         [HttpGet("{id}", Name = "GetOrder")]
         public async Task<ActionResult<OrderDto?>> GetOrder(int id) 
         {
