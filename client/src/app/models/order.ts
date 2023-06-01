@@ -26,6 +26,6 @@ export interface OrderItem {
   name: string
   imageUrl: string
   price: number
-  sizeId: number
+  size?: string
   quantity: number
 }

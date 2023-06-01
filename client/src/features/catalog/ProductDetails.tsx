@@ -7,7 +7,7 @@ import { LoadingButton } from "@mui/lab";
 import { useAppSelector, useAppDispatch } from "../../app/store/configureStore";
 import { addBasketItemAsync, removeBasketItemAsync } from "../basket/basketSlice";
 import { fetchProductAsync, productSelectors } from "./catalogSlice";
-
+import CustomizedDialogs from "../../app/components/CustomizedDialogs";
 
 export default function ProductDetails() {
     const { basket, status } = useAppSelector(state => state.basket);
@@ -20,7 +20,7 @@ export default function ProductDetails() {
     
     const productSize = product?.productSizes ? product.productSizes : "";
     const [size, setSize] = useState(productSize);
-    const item = basket?.items.find(i => i.productId === product?.productId);
+    const item = basket?.items.find(i => i.productId === product?.productId && i.size === size);
 
 
 
@@ -37,12 +37,16 @@ export default function ProductDetails() {
 
 
     function handleUpdateCart() {
-        if (!item || quantity > item?.quantity) {
-            const updatedQuantity = item ? quantity - item.quantity : quantity;
-            dispatch(addBasketItemAsync({productId: product?.productId!, quantity: updatedQuantity}))
+         if (!item || quantity > item?.quantity) {
+          console.log(size.toString());
+            const updatedQuantity = (item && item.size === size) ? quantity - item.quantity : quantity;
+            dispatch(addBasketItemAsync({productId: product?.productId!, size: size.toString(), quantity: updatedQuantity}))
+            console.log(size.toString());
+            console.log(quantity);
+            console.log(updatedQuantity);
         } else {
             const updatedQuantity = item.quantity - quantity;
-            dispatch(removeBasketItemAsync({productId: product?.productId!, quantity: updatedQuantity}))
+            dispatch(removeBasketItemAsync({productId: product?.productId!, size: size.toString(), quantity: updatedQuantity}))
         }
     }
 
@@ -82,7 +86,9 @@ export default function ProductDetails() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Grid item xs={8} >
+            <Grid container spacing={2} display='inline-flex' sx={{mt:1}}>
+                <Grid item xs={6}>
+
             {product.productSizes ? (
                       <div>
                         <label 
@@ -91,7 +97,7 @@ export default function ProductDetails() {
                         >
                           Pick a size 
                         </label>
-                        <Select sx={{ display: 'inline-flex'}}
+                        <Select sx={{ display: 'inline-flex', ml:3}}
                           id="size"
                           name="size"
                           label="Size"
@@ -134,8 +140,14 @@ export default function ProductDetails() {
                         </Select>
                       </div>
                     )}
-            </Grid>
-            <Grid container spacing={2}>
+                    
+                </Grid>
+                <Grid item xs={6} display='inline'>
+                    <CustomizedDialogs />
+                    </Grid>
+                    </Grid>
+                  
+            <Grid container spacing={2} sx={{mt:2}}>
                     <Grid item xs={6}>
                         <TextField
                             onChange={handleInputChange}
@@ -148,7 +160,7 @@ export default function ProductDetails() {
                     </Grid>
                     <Grid item xs={6}>
                         <LoadingButton
-                            disabled={(item?.quantity === quantity )|| (!item && quantity === 0)}
+                            disabled={(item?.quantity === quantity && item.size === size )|| (!item && quantity === 0)}
                             loading={status.includes('pending')}
                             onClick={handleUpdateCart}
                             sx={{ height: '55px' }}
@@ -156,7 +168,7 @@ export default function ProductDetails() {
                             size={'large'}
                             variant={'contained'}
                             fullWidth>
-                            {item ? 'Update Quantity' : 'Add to Cart'}
+                            {item && item.size=== size ? 'Update Quantity' : 'Add to Cart'}
                         </LoadingButton>
                     </Grid>
                 </Grid>

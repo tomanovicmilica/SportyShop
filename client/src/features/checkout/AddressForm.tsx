@@ -13,10 +13,10 @@ export default function AddressForm() {
 
       <Grid container spacing={3}>
         <Grid item xs={12} sm={12}>
-          <AppTextInput control={control} name='fullName' label='Full name' />
+          <AppTextInput control={control} name='fullName' label='*Full name' />
         </Grid>
         <Grid item xs={12}>
-          <AppTextInput control={control} name='address1' label='Address 1' />
+          <AppTextInput control={control} name='address1' label='*Address 1' />
         </Grid>
         <Grid item xs={12}>
           <AppTextInput control={control} name='address2' label='Address 2' />
@@ -25,13 +25,13 @@ export default function AddressForm() {
           <AppTextInput control={control} name='address3' label='Address 3' />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <AppTextInput control={control} name='city' label='City' />
+          <AppTextInput control={control} name='city' label='*City' />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <AppTextInput control={control} name='zip' label='Zipcode' />
+          <AppTextInput control={control} name='zip' label='*Zipcode' />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <AppTextInput control={control} name='country' label='Country' />
+          <AppTextInput control={control} name='country' label='*Country' />
         </Grid>
       </Grid>
 

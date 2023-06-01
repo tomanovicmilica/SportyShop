@@ -23,22 +23,22 @@ namespace API.Entities
         public string? PaymentIntentId { get; set; }
         public string? ClientSecret { get; set; }
 
-        public void AddItem(Product product, int quantity)
+        public void AddItem(Product product, int quantity, string size)
         {
-            if (Items.All(item => item.ProductId != product.ProductId))
+            if (Items.All(item => item.ProductId != product.ProductId || item.Size !=size))
             {
-                Items.Add(new BasketItem { Product = product, Quantity = quantity });
+                Items.Add(new BasketItem { Product = product, Quantity = quantity, Size = size });
                 return;
             }
 
-            var existingItem = Items.FirstOrDefault(item => item.ProductId == product.ProductId);
+            var existingItem = Items.FirstOrDefault(item => item.ProductId == product.ProductId && item.Size==size);
             if (existingItem != null) existingItem.Quantity += quantity;
             //dodati i size u proveru
         }
 
-        public void RemoveItem(int productId, int sizeId, int quantity = 1)
+        public void RemoveItem(int productId,string size, int quantity = 1)
         {
-            var item = Items.FirstOrDefault(basketItem => basketItem.ProductId == productId);
+            var item = Items.FirstOrDefault(basketItem => basketItem.ProductId == productId && basketItem.Size == size);
             if (item == null) return;
             item.Quantity -= quantity;
             if (item.Quantity == 0) Items.Remove(item);

@@ -88,15 +88,16 @@ const Catalog = {
 
 const Basket = {
     get: () => requests.get('basket'),
-    addItem: (productId: number, quantity = 1) => requests.post(`basket?productId=${productId}&quantity=${quantity}`, {}),
-    removeItem: (productId: number, quantity = 1) => requests.delete(`basket?productId=${productId}&quantity=${quantity}`)
+    addItem: (productId: number, quantity = 1, size: string) => requests.post(`basket?productId=${productId}&quantity=${quantity}&size=${size}`, {}),
+    removeItem: (productId: number, size: string, quantity = 1) => requests.delete(`basket?productId=${productId}&size=${size}&quantity=${quantity}`)
 }
 
 const Account = {
     login: (values: any) => requests.post('account/login', values),
     register: (values: any) => requests.post('account/register', values),
     currentUser: () => requests.get('account/currentUser'),
-    fetchAddress: () => requests.get('account/savedAddress')
+    fetchAddress: () => requests.get('account/savedAddress'),
+    updateUser: (user: any) => requests.putForm('account', createFormData(user))
 }
 
 const ProductSize = {
@@ -123,7 +124,10 @@ const Admin = {
     createProductType: (productType: any) => requests.postForm('productType', createFormData(productType)),
     deleteBrand: (id: number) => requests.delete(`brand/${id}`),
     deleteProductType: (id: number) => requests.delete(`productType/${id}`),
-    createSize:(size: any) => requests.postForm('size', createFormData(size))
+    createSize:(size: any) => requests.postForm('size', createFormData(size)),
+    createProductSize:(productSize: any) => requests.postForm('productSize', createFormData(productSize)),
+    deleteProductSize:(id: number) => requests.delete(`productSize/${id}`),
+    updateProductSize: (productSize: any) => requests.putForm('productSize', createFormData(productSize))
 }
 
 const Brand = {

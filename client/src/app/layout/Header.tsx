@@ -61,6 +61,7 @@ export default function Header({handleThemeChange, darkMode}: Props) {
                         Web Shop
                     </Typography>
                     <LocalMallOutlinedIcon sx={{ml: 1}} />
+                    
                     {/*<Switch checked={darkMode} onChange={handleThemeChange} />*/}
 
                 <List sx={{ display: 'flex', ml: 6}}>
@@ -92,11 +93,12 @@ export default function Header({handleThemeChange, darkMode}: Props) {
                             onClose={handleClose}
                             TransitionComponent={Fade}
                         >
-                            <MenuItem component={Link} to='/inventory'>Inventory</MenuItem>
+                            <MenuItem component={Link} to='/inventory'> Product inventory</MenuItem>
                             <MenuItem component={Link} to='/allOrders'>Orders</MenuItem>
                             <MenuItem component={Link} to='/brandInventory'>Brands</MenuItem>
                             <MenuItem component={Link} to='/productTypeInventory'>Product types</MenuItem>
                             <MenuItem component={Link} to='/sizeInventory'>Sizes</MenuItem>
+                            <MenuItem component={Link} to='/productSizeInventory'>Product sizes</MenuItem>
 
                         </Menu>
                         </>

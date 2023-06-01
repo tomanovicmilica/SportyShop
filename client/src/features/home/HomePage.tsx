@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import Slider from 'react-slick';
+import ButtonBases from "./ButtonBases";
 
 const settings = {
     dots: true,
@@ -27,6 +28,9 @@ export default function HomePage() {
             <Typography variant='h1'>
                 Welcome to the web shop!
             </Typography>
+        </Box>
+        <Box>
+            <ButtonBases />
         </Box>
     </>
     )

@@ -31,7 +31,7 @@ export default function ProductForm({ product, cancelEdit }: Props) {
     const dispatch = useAppDispatch();
     const [brand, setBrand] = useState<Brand[]>([{brandId: 0,name: ''}]);
     const [productType, setProductType] = useState<ProductType[]>([{productTypeId: 0,name: ''}]);
-    const [selectedBrandNumber, setSelectedBrandNumber] = useState(0);
+  
 
    
     useEffect(() => {
@@ -78,18 +78,18 @@ export default function ProductForm({ product, cancelEdit }: Props) {
             <form onSubmit={handleSubmit(handleSubmitData)}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={12}>
-                        <AppTextInput control={control} name='name' label='Product name' />
+                        <AppTextInput control={control} name='name' label='*Product name' />
                     </Grid>
 
                                           
                     <Grid item xs={12} sm={6}>
                      
-                         <AppSelectList control={control}  items={brand}  name='brandId' label='Brand' />
+                         <AppSelectList control={control}  items={brand}  name='brandId' label='*Brand' />
     
                     </Grid>
                     <Grid item xs={12} sm={6}>
                     
-                            <AppSelectList control={control} items={productType} name='productTypeId' label='ProductType' />
+                            <AppSelectList control={control} items={productType} name='productTypeId' label='*ProductType' />
                    
                                
                        

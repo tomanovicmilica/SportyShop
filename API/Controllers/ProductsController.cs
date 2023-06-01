@@ -44,6 +44,7 @@ namespace API.Controllers
                 return products!;
         }
 
+
         [HttpGet("{id}", Name = "GetProduct")]
         public async Task<ActionResult<UpdateProductDto?>> GetProduct(int id) {
 

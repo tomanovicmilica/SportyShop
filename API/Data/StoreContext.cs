@@ -24,7 +24,6 @@ namespace API.Data
         public DbSet<Order>? Orders { get; set; }
         public DbSet<Size>? Sizes { get; set; }
         public DbSet<ProductSize>? ProductSizes { get; set; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -41,7 +40,7 @@ namespace API.Data
                     new Role {Id = 2, Name = "Admin", NormalizedName = "ADMIN" }
                 );
 
-            builder.Entity<Order>()
+           builder.Entity<OrderItem>()
                 .ToTable(tb => tb.HasTrigger("ProductStock"));
 
             builder.Entity<BasketItem>()

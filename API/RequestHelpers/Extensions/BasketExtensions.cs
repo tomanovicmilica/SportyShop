@@ -23,6 +23,7 @@ namespace API.RequestHelpers.Extensions
                     ProductId = item.ProductId,
                     Name = item.Product!.Name,
                     Price = item.Product.Price,
+                    Size = item.Size,
                     Description = item.Product.Description,
                     ImageUrl = item.Product.ImageUrl,
                     Quantity = item.Quantity,

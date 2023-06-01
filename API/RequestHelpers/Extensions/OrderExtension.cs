@@ -29,6 +29,7 @@ namespace API.RequestHelpers.Extensions
                         Name = item.ItemOrdered.Name,
                         ImageUrl = item.ItemOrdered.ImageUrl,
                         Price = item.Price,
+                        Size = item.Size,
                         Quantity = item.Quantity
                     })
                     .ToList()

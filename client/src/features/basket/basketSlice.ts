@@ -29,22 +29,22 @@ export const fetchBasketAsync = createAsyncThunk<Basket>(
     }
 )
 
-export const addBasketItemAsync = createAsyncThunk<Basket, {productId: number, quantity?: number}> (
+export const addBasketItemAsync = createAsyncThunk<Basket, {productId: number, quantity?: number, size: string}> (
     'basket/addBasketItemAsync',
-    async({productId, quantity = 1}, thunkAPI) => {
+    async({productId, quantity = 1, size=''}, thunkAPI) => {
         try {
-            return await agent.Basket.addItem(productId, quantity);
+            return await agent.Basket.addItem(productId, quantity, size);
         } catch (error: any) {
             return thunkAPI.rejectWithValue({error: error.data})
         }
     }
 )
 
-export const removeBasketItemAsync = createAsyncThunk<void, {productId: number, quantity: number, name?: string}> (
+export const removeBasketItemAsync = createAsyncThunk<void, {productId: number, quantity: number, size: string, name?: string}> (
         'basket/removeBasketItemASync',
-    async ({productId, quantity}, thunkAPI) => {
+    async ({productId,size, quantity}, thunkAPI) => {
         try {
-            await agent.Basket.removeItem(productId, quantity);
+            await agent.Basket.removeItem(productId,size, quantity);
         } catch (error: any) {
             return thunkAPI.rejectWithValue({error: error.data})
         }
@@ -71,8 +71,8 @@ export const basketSlice = createSlice({
             state.status = 'pendingRemoveItem' + action.meta.arg.productId + action.meta.arg.name;
         });
         builder.addCase(removeBasketItemAsync.fulfilled, (state, action) => {
-            const { productId, quantity } = action.meta.arg;
-            const itemIndex = state.basket?.items.findIndex(i => i.productId === productId);
+            const { productId, size, quantity } = action.meta.arg;
+            const itemIndex = state.basket?.items.findIndex(i => i.productId === productId && i.size === size);
             if (itemIndex === -1 || itemIndex === undefined) return; 
             state.basket!.items[itemIndex].quantity -= quantity;
             if (state.basket?.items[itemIndex].quantity === 0) 

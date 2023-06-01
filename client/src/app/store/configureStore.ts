@@ -6,6 +6,7 @@ import { sizeSlice } from "../../features/catalog/sizeSlice";
 import { accountSlice } from "../../features/account/accountSlice";
 import { brandSlice } from "../../features/catalog/brandSlice";
 import { productTypeSlice } from "../../features/catalog/productTypeSlice";
+import { productSizeSlice } from "../../features/catalog/productSizeSlice";
 
 export const store = configureStore({
     reducer: {
@@ -14,7 +15,8 @@ export const store = configureStore({
         size: sizeSlice.reducer,
         account: accountSlice.reducer,
         brand: brandSlice.reducer,
-        productType: productTypeSlice.reducer
+        productType: productTypeSlice.reducer,
+        productSize: productSizeSlice.reducer
     }
 })
 

@@ -7,6 +7,7 @@ using API.Dto;
 using API.Entities;
 using API.RequestHelpers.Extensions;
 using API.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,6 @@ namespace API.Controllers
         private readonly UserManager<User> _userManager;
         private readonly TokenService _tokenService;
         private readonly StoreContext _context;
-
         public AccountController(UserManager<User> userManager, TokenService tokenService, StoreContext context) {
             _userManager = userManager;
             _tokenService = tokenService;
@@ -110,6 +110,22 @@ namespace API.Controllers
                 .Include(i => i.Items)
                 .ThenInclude(p => p.Product)
                 .FirstOrDefaultAsync(basket => basket.UserId == buyerId);
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<ActionResult<User>> UpdateUser([FromForm]UserDto userDto) {
+
+            var user = await _userManager.FindByNameAsync(User.Identity!.Name!);
+
+            user!.Name = userDto.Name;
+            user.LastName = userDto.LastName;
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return Ok(user);
+
+            return BadRequest(new ProblemDetails { Title = "Problem updating user" });
         }
     }
 }

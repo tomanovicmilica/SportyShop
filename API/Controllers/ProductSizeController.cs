@@ -52,6 +52,7 @@ namespace API.Controllers
             var productSize = _mapper.Map<ProductSize>(productSizeDto);
 
             _context.ProductSizes!.Add(productSize);
+            
 
             var result = await _context.SaveChangesAsync() > 0;
 
@@ -59,6 +60,42 @@ namespace API.Controllers
 
             return BadRequest(new ProblemDetails { Title = "Problem creating new product size" });
 
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut]
+        public async Task<ActionResult<ProductSize>> UpdateProductSize([FromForm]UpdateProductSizeDto productSizeDto)
+        { 
+            var productSize = await _context.ProductSizes!.FindAsync(productSizeDto.Id);
+
+            if (productSize == null) return NotFound();
+
+            _mapper.Map(productSizeDto, productSize);
+
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return Ok(productSize);
+
+            return BadRequest(new ProblemDetails { Title = "Problem updating product size" });
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProductSize(int id)
+        {
+            var pSize = await _context.ProductSizes!.FindAsync(id);
+
+            if (pSize == null) return NotFound();
+
+            _context.ProductSizes.Remove(pSize);
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return Ok();
+
+            return BadRequest(new ProblemDetails { Title = "Problem deleting product size" });
         }
 
     }

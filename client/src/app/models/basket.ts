@@ -8,11 +8,11 @@ export interface Basket {
   }
   
   export interface Item {
-    productId: number
-    name: string
-    price: number
-    description: string
-    imageUrl: string
-    sizeId: number
-    quantity: number
+    productId: number;
+    name: string;
+    price: number;
+    description: string;
+    imageUrl: string;
+    size: string;
+    quantity: number;
   }

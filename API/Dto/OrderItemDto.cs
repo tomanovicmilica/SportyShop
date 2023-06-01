@@ -11,7 +11,7 @@ namespace API.Dto
         public string? Name { get; set; }
         public string? ImageUrl { get; set; }
         public long Price { get; set; }
-        public int Size { get; set; }
+        public string? Size { get; set; }
         public int Quantity { get; set; }
     }
 }
