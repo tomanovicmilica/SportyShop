@@ -97,7 +97,7 @@ const Account = {
     register: (values: any) => requests.post('account/register', values),
     currentUser: () => requests.get('account/currentUser'),
     fetchAddress: () => requests.get('account/savedAddress'),
-    updateUser: (user: any) => requests.putForm('account', createFormData(user))
+    updateUser: (user: any) => requests.putForm('account/updateUser', createFormData(user))
 }
 
 const ProductSize = {

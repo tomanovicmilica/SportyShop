@@ -7,4 +7,5 @@ export interface User {
     roles?: string[];
     name?: string;
     lastName?: string;
+    phoneNumber?: string;
 }

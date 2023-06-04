@@ -12,8 +12,8 @@ interface Props{
     cancelEdit: () => void;
 }
 
-export default function SizeForm({ size, cancelEdit }: Props) {
-    const { control, reset, handleSubmit, watch, formState: { isDirty, isSubmitting } } = useForm({
+export default function SizeForm({ cancelEdit }: Props) {
+    const { control, handleSubmit, formState: { isSubmitting } } = useForm({
         //resolver: yupResolver(validationSchema)
     });
     const dispatch = useAppDispatch();

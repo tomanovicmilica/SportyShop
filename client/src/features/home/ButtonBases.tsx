@@ -3,13 +3,9 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
-import useProducts from '../../app/hooks/useProducts';
-import { useAppDispatch, useAppSelector } from '../../app/store/configureStore';
+import { useAppDispatch } from '../../app/store/configureStore';
 import { setProductParams } from '../catalog/catalogSlice';
-import ProductList from '../catalog/ProductList';
-import { Grid } from '@mui/material';
-import Catalog from '../catalog/Catalog';
-import { Link, NavLink, useHref } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const images = [
   {
@@ -95,13 +91,8 @@ const ImageMarked = styled('span')(({ theme }) => ({
 
 export default function ButtonBases() {
 
-    const {products,types, filtersLoaded, metaData} = useProducts();
-    const {productParams} = useAppSelector(state => state.catalog);
     const dispatch = useAppDispatch();
 
-     function handleCatalog() {
-      
-     }
 
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', minWidth: 300, width: '100%' }} component={NavLink} to='/catalog'>

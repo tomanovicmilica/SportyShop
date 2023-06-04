@@ -85,7 +85,10 @@ namespace API.Controllers
             return new UserDto {
                 Email = user!.Email,
                 Token = await _tokenService.GenerateToken(user),
-                Basket = userBasket?.MapBasketToDto()
+                Basket = userBasket?.MapBasketToDto(),
+                Name = user.Name,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber
             };
         }
 
@@ -113,17 +116,19 @@ namespace API.Controllers
         }
 
         [Authorize]
-        [HttpPut]
+        [HttpPut("updateUser")]
         public async Task<ActionResult<User>> UpdateUser([FromForm]UserDto userDto) {
 
             var user = await _userManager.FindByNameAsync(User.Identity!.Name!);
-
+            
             user!.Name = userDto.Name;
             user.LastName = userDto.LastName;
+            user.PhoneNumber = userDto.PhoneNumber;
 
-            var result = await _context.SaveChangesAsync() > 0;
+            var result = await _userManager.UpdateAsync(user);
 
-            if (result) return Ok(user);
+            
+            if (result != null) return Ok(user);
 
             return BadRequest(new ProblemDetails { Title = "Problem updating user" });
         }

@@ -19,7 +19,7 @@ export default function AboutPage() {
          <Grid item xs={8}>
             <Box display='block' justifyContent='center' sx={{ p: 4 }} >
                         <Typography variant='h1'>
-                                About us
+                                About Sporty
                         </Typography>
                         <CssBaseline />
                         

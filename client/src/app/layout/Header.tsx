@@ -58,7 +58,7 @@ export default function Header({handleThemeChange, darkMode}: Props) {
                         to='/'
                         sx={navStyles}
                     >
-                        Web Shop
+                        Sporty
                     </Typography>
                     <LocalMallOutlinedIcon sx={{ml: 1}} />
                     

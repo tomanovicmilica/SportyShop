@@ -46,7 +46,7 @@ const Contact = () => {
         <input type="email" name="user_email" />
         <label>Message</label>
         <textarea name="message" />
-        <input type="submit" value="Send" onClick={notify}/>
+        <input type="submit" value="Send" onClick={notify} style={{color:'#4e342e', backgroundColor: '#8d6e63'}} />
       </form>
     </StyledContactForm>
     </Grid>

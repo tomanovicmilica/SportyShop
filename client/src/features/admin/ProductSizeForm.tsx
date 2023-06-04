@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { Size } from "../../app/models/size";
 import useProducts from "../../app/hooks/useProducts";
 import AppSelectList from "../../app/components/AppSelectListSize";
-import { Link } from "react-router-dom";
+
 
 
 interface Props{
@@ -19,7 +19,7 @@ interface Props{
 }
 
 export default function ProductTypeForm({productSize, cancelEdit}: Props) {
-    const { control, reset, handleSubmit, watch, formState: { isDirty, isSubmitting } } = useForm({
+    const { control, handleSubmit, formState: { isSubmitting } } = useForm({
         //resolver: yupResolver(validationSchema)
     });
     const dispatch = useAppDispatch();
@@ -32,6 +32,7 @@ export default function ProductTypeForm({productSize, cancelEdit}: Props) {
             .then(size => setSize(size))
             .catch(error => console.log(error))
     }, []);
+
 
     async function handleSubmitData(data: FieldValues) {
         try {

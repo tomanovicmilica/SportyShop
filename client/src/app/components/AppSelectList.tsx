@@ -1,5 +1,5 @@
-import { FormControl, InputLabel, Select, MenuItem, FormHelperText, TextField } from "@mui/material";
-import { useController, UseControllerProps, useFieldArray, useForm } from "react-hook-form";
+import { FormControl, InputLabel, Select, MenuItem, FormHelperText } from "@mui/material";
+import { useController, UseControllerProps } from "react-hook-form";
 
 
 interface MyType {
@@ -7,18 +7,6 @@ interface MyType {
     productTypeId?: number;
     name: string;
 }
-
-type FormValues = {
-    [x: string]: any;
-    brand: {
-        brandId: number;
-        name: string;
-    }[];
-    productType: {
-        productTypeId: number;
-        name: string;
-    }[];
-};
 
 interface Props extends UseControllerProps {
     label: string;

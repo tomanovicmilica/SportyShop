@@ -2,17 +2,12 @@ import { Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, 
 import { Product} from "../../app/models/product";
 import { Link } from "react-router-dom";
 import { currencyFormat } from "../../app/util/util";
-import { LoadingButton } from "@mui/lab";
-import { useAppSelector, useAppDispatch } from "../../app/store/configureStore";
-import { addBasketItemAsync } from "../basket/basketSlice";
 
 interface Props {
     product: Product;
 }
 
 export default function ProductCard({product}: Props) {
-    const {status} = useAppSelector(state => state.basket);
-    const dispatch = useAppDispatch();
 
     return (
         <Card>

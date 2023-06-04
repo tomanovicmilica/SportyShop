@@ -12,8 +12,8 @@ interface Props{
     cancelEdit: () => void;
 }
 
-export default function ProductTypeForm({productType, cancelEdit}: Props) {
-    const { control, reset, handleSubmit, watch, formState: { isDirty, isSubmitting } } = useForm({
+export default function ProductTypeForm({cancelEdit}: Props) {
+    const { control, handleSubmit, formState: { isSubmitting } } = useForm({
         //resolver: yupResolver(validationSchema)
     });
     const dispatch = useAppDispatch();

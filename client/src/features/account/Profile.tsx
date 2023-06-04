@@ -1,41 +1,40 @@
-import { Box, Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { Box, Button, Grid, Paper, Typography } from "@mui/material";
+import { useAppDispatch } from "../../app/store/configureStore";
 import { User } from "../../app/models/user";
 import agent from "../../app/api/agent";
 import { setUser } from "./accountSlice";
 import { FieldValues, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import AppTextInput from "../../app/components/AppTextInput";
-import { useState } from "react";
-import userEvent from "@testing-library/user-event";
 
 interface Props {
-    useR: User;
+    user: User;
     cancelEdit: () => void;
 }
 
-export default function Profile({useR, cancelEdit}: Props) {
+export default function Profile({cancelEdit}: Props) {
 
-    const {user} = useAppSelector(state => state.account);
+   //const {user} = useAppSelector(state => state.account);
     const dispatch = useAppDispatch();
-    const { control, reset, handleSubmit, formState: { isDirty, isSubmitting } } = useForm({});
+    //const [userr , setUser] = useState(user);
+    const { control, handleSubmit, formState: { isSubmitting } } = useForm({});
     
     async function handleSubmitData(data: FieldValues) {
-        try {
+      try {
             let response: User;
             
         response = await agent.Account.updateUser(data);
-        const {...user} = response;
-        dispatch(setUser(user));
+        dispatch(setUser(response));
         cancelEdit();
         } catch (error) {
             console.log(error);
         }
+
     }
     return(
         <Box component={Paper} sx={{ p: 4 }}>
             <Typography variant="h4" gutterBottom sx={{ mb: 4 }}>
-                Product Details
+                User Details
             </Typography>
             <form onSubmit={handleSubmit(handleSubmitData)}>
                 <Grid container spacing={3}>
@@ -47,10 +46,10 @@ export default function Profile({useR, cancelEdit}: Props) {
                         <AppTextInput control={control} name='lastName' label='Last name' />
                     </Grid>
 
-                    <Grid> 
-                        <TextField disabled={true}>{user?.email}</TextField>
+                    <Grid item xs={12} sm={6}>
+                        <AppTextInput control={control} name='phoneNumber' label='Phone number' />
                     </Grid>
-                    
+
                     
                 </Grid>
                 <Box display='flex' justifyContent='space-between' sx={{ mt: 3 }}>

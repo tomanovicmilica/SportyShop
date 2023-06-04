@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useAppDispatch } from "../../app/store/configureStore";
 import { Size } from "../../app/models/size";
 import useSize from "../../app/hooks/useSize";
 import { Box, Typography, Button, TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material";
@@ -7,16 +6,9 @@ import SizeForm from "./SizeForm";
 
 export default function SizeInventory() {
     const {sizes} = useSize();
-    const dispatch = useAppDispatch();
     const [editMode, setEditMode] = useState(false);
     const [selectedSize, setSelectedSize] = useState<Size | undefined>(undefined);
-    const [loading, setLoading] = useState(false);
-    const [target, setTarget] = useState(0);
 
-    function handleSelectSize(size: Size) {
-        setSelectedSize(size);
-        setEditMode(true);
-    }
 
     function cancelEdit() {
         if (selectedSize) setSelectedSize(undefined);
